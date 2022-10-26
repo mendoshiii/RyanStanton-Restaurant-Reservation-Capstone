@@ -132,14 +132,43 @@ function isValidDate(req, res, next) {
 /*
  * Check "isTime" handler for reservation resources
  */
+function removeDate(date) {
+  return date.getHours() + ":" + date.getMinutes();
+}
+
+/**
+ * Check "isTime" handler for reservation resources
+ */
+//this is using regexp; regular expressions, patterns
 function isTime(req, res, next) {
   const { data = {} } = req.body;
+  const curTime = removeDate(new Date());
+  // TODO: Change this...
+  //HH:MM 24-hour with leading 0 || don't know what this one is yet***
   if (
     /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(data["reservation_time"]) ||
     /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/.test(
       data["reservation_time"]
     )
   ) {
+    if (data["reservation_time"] < "10:30") {
+      return next({
+        status: 400,
+        message: "restaurant is not open until 10:30AM",
+      });
+    }
+    if (data["reservation_time"] < curTime) {
+      return next({
+        status: 400,
+        message: "cannot schedule a reservation before now",
+      });
+    }
+    if (data["reservation_time"] > "21:30") {
+      return next({
+        status: 400,
+        message: "cannot schedule a reservation after 9:30pm",
+      });
+    }
     return next();
   }
   next({ status: 400, message: `Invalid reservation_time` });
