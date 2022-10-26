@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { listReservations, cancelReservation, finishTable } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
-//import DashboardDetails from "./DashboardDetails";
 import Reservations from "./Reservations";
 import { today, next, previous } from "../utils/date-time";
 
@@ -35,10 +34,6 @@ function Dashboard({ date }) {
       .then(loadDashboard)
       .catch(setReservationsError);
   }
-
-  // function onFinish(table_id, reservation_id) {
-  //   finishTable(table_id, reservation_id).then(loadDashboard);
-  // }
 
   console.log("reservations on dashboard: ", reservations);
   return (
