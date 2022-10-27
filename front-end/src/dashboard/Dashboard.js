@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { listReservations, cancelReservation, finishTable } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import Reservations from "./Reservations";
+import Tables from "./Tables";
 import { today, next, previous } from "../utils/date-time";
 
 /**
@@ -44,6 +45,8 @@ function Dashboard({ date }) {
       </div>
       <ErrorAlert error={reservationsError} />
       <Reservations reservations={reservations} onCancel={onCancel} />
+
+      <Tables />
 
       <Link to={`/dashboard?date=${previous(date)}`}>Previous</Link>
       <Link to={`/dashboard?date=${today(date)}`}>Today</Link>

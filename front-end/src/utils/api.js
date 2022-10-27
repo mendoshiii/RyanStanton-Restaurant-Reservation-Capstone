@@ -129,3 +129,26 @@ export async function updateReservation(reservationId, data) {
   };
   return await fetchJson(url, options, {});
 }
+
+// table api handlers
+// export async function listReservations(params, signal) {
+//   const url = new URL(`${API_BASE_URL}/reservations`);
+//   Object.entries(params).forEach(([key, value]) =>
+//     url.searchParams.append(key, value.toString())
+//   );
+//   return await fetchJson(url, { headers, signal }, [])
+//     .then(formatReservationDate)
+//     .then(formatReservationTime);
+// }
+
+export async function createTable(table, signal) {
+  const url = `${API_BASE_URL}/tables`;
+  const options = {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ data: table }),
+    signal,
+  };
+
+  return await fetchJson(url, options, table);
+}
