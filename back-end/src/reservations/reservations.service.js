@@ -18,9 +18,7 @@ function create(newReservation) {
 
 function update(updatedReservation) {
   return knex("reservations")
-    .where({
-      reservation_id: updatedReservation.reservation_id,
-    })
+    .where({ reservation_id: updatedReservation.reservation_id })
     .update(updatedReservation, "*")
     .then((updatedRecord) => updatedRecord[0]);
 }
