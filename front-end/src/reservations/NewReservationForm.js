@@ -1,6 +1,7 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+
+// error handler/utils
 import { createReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 

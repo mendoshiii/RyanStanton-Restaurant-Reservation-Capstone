@@ -1,4 +1,5 @@
 import React from "react";
+import { finishTable } from "../utils/api";
 
 export default function Tables({ table, loadDashboard }) {
   const { table_id, table_name, capacity, reservation_id } = table;
@@ -13,7 +14,18 @@ export default function Tables({ table, loadDashboard }) {
       </td>
       <td>
         {reservation_id ? (
-          <button data-table-id-finish={table_id} className="btn btn-warning">
+          <button
+            data-table-id-finish={table_id}
+            className="delete button btn btn-warning"
+            onClick={() => {
+              const confirmBox = window.confirm(
+                "Is this table ready to seat new guests? This cannot be undone."
+              );
+              if (confirmBox === true) {
+                finishTable(table_id);
+              }
+            }}
+          >
             Finish
           </button>
         ) : null}

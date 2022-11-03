@@ -96,9 +96,9 @@ async function create(req, res) {
 
 async function finishTable(req, res) {
   const { table_id } = req.params;
-  const { reservation_id } = req.body.data;
+  //const { reservation_id } = res.locals.table;
 
-  const data = await service.finishTable(reservation_id, table_id);
+  const data = await service.finishTable(table_id);
   res.status(200).json({ data });
 }
 
@@ -129,6 +129,17 @@ async function tableIsOccupied(req, res, next) {
   }
   next();
 }
+async function finishOccupiedTable(req, res, next) {
+  const { reservation_id } = res.locals.table;
+
+  if (reservation_id === null) {
+    return next({
+      status: 400,
+      message: "table is not occupied",
+    });
+  }
+  next();
+}
 
 module.exports = {
   create: [
@@ -141,6 +152,7 @@ module.exports = {
   read: [tablesExists, asyncErrorBoundary(read)],
   finishTable: [
     asyncErrorBoundary(tablesExists),
+    finishOccupiedTable,
     asyncErrorBoundary(finishTable),
   ],
   seatTable: [

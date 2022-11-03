@@ -90,7 +90,7 @@ export async function readReservation(reservation_id, signal) {
 }
 
 export async function finishTable(table_id) {
-  const url = `${API_BASE_URL}/tables/${table_id}/seat`;
+  const url = new URL(`${API_BASE_URL}/tables/${table_id}/seat`);
   const options = {
     method: "DELETE",
     headers,

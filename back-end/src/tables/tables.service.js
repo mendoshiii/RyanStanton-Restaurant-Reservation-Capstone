@@ -14,7 +14,8 @@ function create(newTable) {
     .then((createdRecords) => createdRecords[0]);
 }
 
-function finishTable(reservation_id, table_id) {
+// removed reservation_id
+function finishTable(table_id) {
   return knex("tables")
     .where({ table_id: table_id })
     .update({ reservation_id: null });

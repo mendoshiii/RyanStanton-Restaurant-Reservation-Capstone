@@ -115,32 +115,58 @@ function isValidDate(req, res, next) {
  * Check "isTime" handler for reservation resources
  */
 //this is using regexp; regular expressions, patterns
+// function isTime(req, res, next) {
+//   const { data = {} } = req.body;
+
+//   if (
+//     /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(data["reservation_time"]) ||
+//     /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/.test(
+//       data["reservation_time"]
+//     )
+//   ) {
+//     return next({ status: 400, message: `Invalid reservation_time` });
+//   }
+//   if (data["reservation_time"] < "10:30") {
+//     return next({
+//       status: 400,
+//       message: "restaurant is not open until 10:30AM",
+//     });
+//   }
+
+//   if (data["reservation_time"] > "21:30") {
+//     return next({
+//       status: 400,
+//       message: "cannot schedule a reservation after 9:30pm",
+//     });
+//   }
+//   next();
+// }
+
 function isTime(req, res, next) {
   const { data = {} } = req.body;
-
   //HH:MM 24-hour with leading 0 || don't know what this one is yet***
-  // if (
-  //   /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(data["reservation_time"]) ||
-  //   /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/.test(
-  //     data["reservation_time"]
-  //   )
-  // ) {
-  //   return next({ status: 400, message: `Invalid reservation_time` });
-  // }
-  if (data["reservation_time"] < "10:30") {
-    return next({
-      status: 400,
-      message: "restaurant is not open until 10:30AM",
-    });
-  }
+  if (
+    /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(data["reservation_time"]) ||
+    /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/.test(
+      data["reservation_time"]
+    )
+  ) {
+    if (data["reservation_time"] < "10:30") {
+      return next({
+        status: 400,
+        message: "restaurant is not open until 10:30AM",
+      });
+    }
 
-  if (data["reservation_time"] > "21:30") {
-    return next({
-      status: 400,
-      message: "cannot schedule a reservation after 9:30pm",
-    });
+    if (data["reservation_time"] > "21:30") {
+      return next({
+        status: 400,
+        message: "cannot schedule a reservation after 9:30pm",
+      });
+    }
+    return next();
   }
-  next();
+  next({ status: 400, message: `Invalid reservation_time` });
 }
 
 function timeIsValid(req, res, next) {
@@ -216,9 +242,9 @@ module.exports = {
   create: [
     hasRequiredProperties,
     timeIsValid,
-    isTime,
     isValidDate,
     isValidNumber,
+    isTime,
     asyncErrorBoundary(create),
   ],
   read: [asyncErrorBoundary(reservationExists), read],

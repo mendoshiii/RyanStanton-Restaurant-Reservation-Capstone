@@ -19,13 +19,15 @@ import Tables from "./Tables";
  */
 
 export default function Dashboard({ date }) {
-  const history = useHistory();
-  // getting the current day in YYYY-MM-DD format
-  const today = new Date().toJSON().slice(0, 10);
   // determine the date from the parameters if provided
   const query = useQuery();
   const dateQuery = query.get("date");
+  // getting the current day in YYYY-MM-DD format
+  const today = new Date().toJSON().slice(0, 10);
+
   const [dashDate, setDashDate] = useState(dateQuery ? dateQuery : today);
+
+  const history = useHistory();
 
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
@@ -82,6 +84,7 @@ export default function Dashboard({ date }) {
         <h4 className="mb-0">Reservations for {date}</h4>
       </div>
       <ErrorAlert error={reservationsError} />
+      <ErrorAlert error={tablesError} />
       <table className="table">
         <thead>
           <tr>
@@ -100,7 +103,7 @@ export default function Dashboard({ date }) {
       <div className="d-md-flex mb-3">
         <h4 className="mb-0">Tables</h4>
       </div>
-      <ErrorAlert error={tablesError} />
+
       <main>
         <table className="table">
           <thead>
