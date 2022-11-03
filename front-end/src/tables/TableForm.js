@@ -1,10 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+
+// utils/error handler
 import { createTable } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 
-function FormTable() {
+export default function FormTable() {
   const history = useHistory();
   const [error, setError] = useState(null);
 
@@ -40,15 +42,10 @@ function FormTable() {
       .catch(setError);
   }
 
-  function cancelHandler() {
-    history.push("/");
-  }
-
   return (
     <main>
-      {/* <h1>Create Table</h1> */}
       <ErrorAlert error={error} />
-      <p>This is my pretty table for you to sit at</p>
+      <p>Create A New Table</p>
       <form onSubmit={submitHandler}>
         <div>
           <div>
@@ -92,7 +89,7 @@ function FormTable() {
           <button
             type="button"
             className="btn btn-secondary mr-2"
-            onClick={cancelHandler}
+            onClick={history.goBack}
           >
             Cancel
           </button>
@@ -104,5 +101,3 @@ function FormTable() {
     </main>
   );
 }
-
-export default FormTable;

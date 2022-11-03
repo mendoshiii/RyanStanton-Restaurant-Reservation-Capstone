@@ -1,7 +1,9 @@
 import React from "react";
+
+// show reservation form
 import NewReservationForm from "./NewReservationForm";
 
-function NewReservation() {
+function CreateReservation() {
   return (
     <main>
       <h1>Create a New Reservation</h1>
@@ -10,4 +12,4 @@ function NewReservation() {
   );
 }
 
-export default NewReservation;
+export default CreateReservation;

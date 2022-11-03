@@ -6,16 +6,18 @@ import ErrorAlert from "../layout/ErrorAlert";
 
 function NewReservationForm() {
   const history = useHistory();
+
   const initialState = {
     first_name: "",
     last_name: "",
     mobile_number: "",
     reservation_date: "",
     reservation_time: "",
-    people: 0,
+    people: 1,
   };
 
   const [reservation, setReservation] = useState(initialState);
+
   function changeHandler({ target: { name, value } }) {
     setReservation((prevState) => ({
       ...prevState,
@@ -32,9 +34,6 @@ function NewReservationForm() {
   }
 
   const [error, setError] = useState(null);
-  // function cancelHandler() {
-  //     history.push("/");
-  // }
 
   function submitHandler(event) {
     event.preventDefault();
@@ -47,6 +46,7 @@ function NewReservationForm() {
       })
       .catch(setError);
   }
+
   return (
     <form onSubmit={submitHandler}>
       <ErrorAlert error={error} />
@@ -102,6 +102,9 @@ function NewReservationForm() {
             value={reservation.reservation_time}
             onChange={changeHandler}
           />
+          <small className="col-sm-2">
+            Reservation hours are between 10:30am and 9:30pm{" "}
+          </small>
         </div>
       </div>
       <div className="form-group row">
@@ -117,7 +120,7 @@ function NewReservationForm() {
         </div>
       </div>
       <button type="submit">Submit</button>
-      <button type="button" onClick={() => history.goBack()}>
+      <button type="button" onClick={history.goBack}>
         Cancel
       </button>
     </form>
