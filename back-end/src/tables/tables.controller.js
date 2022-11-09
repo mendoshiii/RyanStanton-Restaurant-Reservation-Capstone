@@ -38,7 +38,7 @@ async function reservationIdExists(req, res, next) {
   });
 }
 
-const VALID_PROPERTIES = ["table_name", "capacity"];
+const VALID_PROPERTIES = ["table_name", "capacity", "reservation_id"];
 
 const hasRequiredProperties = hasProperties("table_name", "capacity");
 
@@ -96,9 +96,10 @@ async function create(req, res) {
 
 async function finishTable(req, res) {
   const { table_id } = req.params;
-  //const { reservation_id } = res.locals.table;
+  const { reservation_id } = res.locals.table;
 
-  const data = await service.finishTable(table_id);
+  const data = await service.finishTable(table_id, reservation_id);
+
   res.status(200).json({ data });
 }
 
@@ -141,6 +142,17 @@ async function finishOccupiedTable(req, res, next) {
   next();
 }
 
+function isTableAlreadySeated(req, res, next) {
+  const { status } = res.locals.reservation;
+  if (status === "seated") {
+    return next({
+      status: 400,
+      message: "seated",
+    });
+  }
+  next();
+}
+
 module.exports = {
   create: [
     hasRequiredProperties,
@@ -160,6 +172,7 @@ module.exports = {
     asyncErrorBoundary(reservationIdExists),
     asyncErrorBoundary(tablesExists),
     tableIsOccupied,
+    isTableAlreadySeated,
     asyncErrorBoundary(seatTable),
   ],
   list: asyncErrorBoundary(list),

@@ -3,6 +3,7 @@ const knex = require("../db/connection");
 function list(date) {
   return knex("reservations")
     .where("reservation_date", date)
+    .whereNotIn("status", ["finished", "cancelled"])
     .orderBy("reservation_time");
 }
 
@@ -19,6 +20,7 @@ function create(newReservation) {
 function update(updatedReservation) {
   return knex("reservations")
     .where({ reservation_id: updatedReservation.reservation_id })
+    .whereNot({ status: "finished" })
     .update(updatedReservation, "*")
     .then((updatedRecord) => updatedRecord[0]);
 }
