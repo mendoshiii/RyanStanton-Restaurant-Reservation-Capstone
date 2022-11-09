@@ -25,6 +25,7 @@ function update(updatedReservation) {
     .then((updatedRecord) => updatedRecord[0]);
 }
 
+
 function search(mobile_number) {
   return knex("reservations")
     .whereRaw(

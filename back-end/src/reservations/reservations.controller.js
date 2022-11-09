@@ -36,6 +36,9 @@ const validFields = [
   "reservation_time",
   "people",
   "status",
+  "reservation_id",
+  "created_at",
+  "updated_at",
 ];
 
 function hasValidFields(req, res, next) {
@@ -213,7 +216,7 @@ async function list(req, res) {
   });
 }
 
-const validStatus = ["booked", "finished", "seated"];
+const validStatus = ["booked", "finished", "seated", "cancelled"];
 
 function hasValidStatus(req, res, next) {
   const { status } = req.body.data;

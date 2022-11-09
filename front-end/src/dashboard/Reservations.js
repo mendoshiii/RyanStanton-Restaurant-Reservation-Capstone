@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { cancelReservation } from "../utils/api";
 
 export default function Reservations({ reservation, loadDashboard }) {
