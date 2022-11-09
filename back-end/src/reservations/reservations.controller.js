@@ -204,9 +204,12 @@ async function destroy(req, res) {
  * List handler (basic) for reservation resources
  */
 async function list(req, res) {
-  const data = await reservationsService.list(req.query.date);
+  const { date, mobile_number } = req.query;
+  const reservation = await (mobile_number
+    ? reservationsService.search(mobile_number)
+    : reservationsService.list(date));
   res.json({
-    data,
+    data: reservation,
   });
 }
 
