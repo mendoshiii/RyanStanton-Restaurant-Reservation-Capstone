@@ -11,6 +11,8 @@ import CreateTable from "../tables/CreateTable";
 import SeatTable from "../components/SeatTable";
 import Search from "../dashboard/Search";
 import Dashboard from "../dashboard/Dashboard";
+import EditReservation from "../reservations/EditReservation";
+import ReservationStatus from "../reservations/ReservationStatus";
 
 // error handler
 import NotFound from "./NotFound";
@@ -39,6 +41,12 @@ export default function Routes() {
       </Route>
       <Route path="/reservations/:reservation_id/seat">
         <SeatTable />
+      </Route>
+      <Route path="/reservations/:reservation_id/status">
+        <ReservationStatus />
+      </Route>
+      <Route path="/reservations/:reservation_id/edit">
+        <EditReservation />
       </Route>
 
       <Route exact={true} path="/tables">
