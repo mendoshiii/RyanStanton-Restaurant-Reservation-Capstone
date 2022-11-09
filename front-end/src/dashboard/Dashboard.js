@@ -67,10 +67,7 @@ export default function Dashboard({ date }) {
   };
 
   const tableList = tables.map((table) => (
-    <Tables 
-    loadDashboard={loadDashboard} 
-    key={table.table_id} 
-    table={table} />
+    <Tables loadDashboard={loadDashboard} key={table.table_id} table={table} />
   ));
 
   const reservationList = reservations.map((reservation) => (
