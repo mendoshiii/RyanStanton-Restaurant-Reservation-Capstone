@@ -19,7 +19,7 @@ function CreateReservation() {
   };
 
   const [reservation, setReservation] = useState(initialState);
-  const [reservationError, setReservationError] = useState(null);
+  // const [reservationError, setReservationError] = useState(null);
   const [error, setError] = useState(null);
 
   function submitHandler(event) {
