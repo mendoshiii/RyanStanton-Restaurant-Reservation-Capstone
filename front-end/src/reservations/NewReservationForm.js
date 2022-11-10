@@ -54,6 +54,7 @@ function NewReservationForm({ reservation, setReservation, submitHandler }) {
           <input
             name="mobile_number"
             type="tel"
+            pattern="[0-9\-]+"
             value={reservation.mobile_number}
             onChange={changeHandler}
           />
