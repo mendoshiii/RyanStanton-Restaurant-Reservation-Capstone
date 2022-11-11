@@ -75,10 +75,10 @@ describe("US-03 - Create reservation on a future, working date - E2E", () => {
       expect(await page.$(".alert-danger")).toBeTruthy();
     });
 
-    test.skip("displays an error message if reservation time is after the close time", async () => {
+    test("displays an error message if reservation time is after the close time", async () => {
       // TA Casey: Looking into possible 24 hour time conflict
       await page.type("input[name=reservation_date]", "02022035");
-      await page.type("input[name=reservation_time]", "2245"); // Changed 10:45pm to 24 hour time for Ryan's Machine
+      await page.type("input[name=reservation_time]", "1045pm"); // Changed 10:45pm to 24 hour time for Ryan's Machine
 
       await page.screenshot({
         path: ".screenshots/us-02-reservation-too-late-before.png",
